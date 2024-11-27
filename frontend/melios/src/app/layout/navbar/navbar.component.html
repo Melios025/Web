@@ -1,0 +1,45 @@
+<div class="navbar bg-base-100 px-5">
+    <div class="navbar-start items-center w-auto max-w-max ">
+        <div class="dropdown">
+            <a class="btn btn-ghost text-xl">
+                <div class="border bg-secondary logo p-2 rounded-xl" routerLink="/">MELIOS</div>
+            </a>
+        </div>
+    </div>
+    <div class="navbar-center flex flex-grow">
+        <div class="menu menu-sm sm:menu-lag menu-horizontal ">
+            <li><a href="/">Home</a></li>
+            <li>
+                <details #ProductsMenu>
+                    <summary>Products</summary>
+                    <ul class="z-30">
+                        <li><a href="/products">All</a></li>
+                    </ul>
+                </details>
+            </li>
+            <li>
+                <details #AdminMenu>
+                    <summary>Admin</summary>
+                    <ul class="z-30">
+                        <li><a href="/products">All</a></li>
+                    </ul>
+                </details>
+            </li>
+        </div>
+    </div>
+    <div class="navbar-end flex items-end">
+        <div class="dropdown dropdown-end pe-5 w-auto">
+            <div tabindex="0" role="button">
+                <fa-icon [icon]="['fas', 'user']" class="menu-icon"></fa-icon>
+            </div>
+            <ul class="dropdown-content menu menu-lg bg-base-100 rounded-box shadow">
+                <li class="link">Login</li>
+            </ul>
+        </div>
+        <div class=" navbar-end dropdown-end me-2 w-auto" routerLink="/cart">
+            <div tabindex="0" role="button">
+                <fa-icon [icon]="['fas', 'cart-shopping']" class="menu-icon"></fa-icon>
+            </div>
+        </div>
+    </div>
+</div>
