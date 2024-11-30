@@ -25,10 +25,18 @@ SECRET_KEY = "django-insecure-=%bd7q@0ehcz5v*3qm&#1m&65j^3v=67nbr7rcho#icg#yswj%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
-
+ALLOWED_HOSTS = ['127.0.0.1']
+CORS_ALLOW_ALL_ORIGINS = True
+AUTH_USER_MODEL = "user.User"
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:4200",  # Angular frontend
+]
+CORS_ALLOW_CREDENTIALS = False
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:4200',  # Địa chỉ của Angular
+]
 # Application definition
+
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -40,14 +48,13 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "games",
+    "user.apps.UserConfig",
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
-
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
-    "django.middleware.csrf.CsrfViewMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "corsheaders.middleware.CorsMiddleware",  # Đặt ngay sau SecurityMiddleware
+    # "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",

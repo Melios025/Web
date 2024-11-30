@@ -14,12 +14,17 @@
                 </a>
                 <div class="px-5 pb-5">
                     <a href="#">
-                        <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                        <h5 class="text-xl font-semibold tracking-tight text-gray-300 dark:text-white">
                             {{game.game_name}}</h5>
                     </a>
 
                     <div class="flex items-center justify-between">
-                        <span class="text-2xl text-gray-900 dark:text-white">{{game.game_price}}đ</span>
+                        <span class="text-2xl font-bold mr-2  text-red-300"
+                            *ngIf="game?.final_game_price else outOfStock">{{game.final_game_price|
+                            number}}đ</span>
+                        <ng-template #outOfStock>
+                            <span class="text-2xl text-red-300">Out of stock</span>
+                        </ng-template>
                         <a [routerLink]="['/products',game.game_id]"
                             class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-6   00 dark:hover:bg-white-700 dark:focus:ring-gray-800">Add
                             to cart</a>

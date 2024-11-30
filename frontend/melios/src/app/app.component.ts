@@ -10,7 +10,7 @@ import { fontAwesomeIcons } from './shared/font-awesome-icons';
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FooterComponent } from './layout/footer/footer.component';
-import { FlowbiteService } from './services/flowbite.service';
+
 
 
 @Component({
@@ -26,15 +26,12 @@ export class AppComponent implements OnInit {
   private faIconLibrary = inject(FaIconLibrary);
   private faConfig = inject(FaConfig);
   private platformId = inject(PLATFORM_ID);
-constructor(private flowbiteService: FlowbiteService){}
+constructor(){}
   ngOnInit(): void {
     this.initFontAwesome();
-    this.flowbiteService.loadFlowbite(flowbite => {
-      // Your custom code here
-    });
     if(!(typeof document === "undefined")) {
-      import('tw-elements').then(({ initTWE, Carousel }) => {
-        initTWE({ Carousel }, { allowReinits: true });
+      import('tw-elements').then(({ initTWE, Carousel, Input,  Ripple }) => {
+        initTWE({ Carousel, Input, Ripple }, { allowReinits: true });
       });
     }
   }

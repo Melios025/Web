@@ -28,6 +28,17 @@ export class ProductComponent implements OnInit {
       }
     });
   }
+  changeImage(event: MouseEvent): void {
+    const mainImage = document.getElementById('mainImage') as HTMLImageElement | null;
+    const target = event.target as HTMLImageElement;
+    const src = target.src;
+    if (mainImage) {
+      mainImage.src = src;
+    } else {
+      console.error("Element with ID 'mainImage' not found.");
+    }
+  }
+  
   getProduct(id: number): void {
     this.api.getGameById(id).subscribe(
       data => {
@@ -39,8 +50,8 @@ export class ProductComponent implements OnInit {
         this.pictures = data
       }
     )
-
   }
   ngOnInit(): void {
+    
   }
 }

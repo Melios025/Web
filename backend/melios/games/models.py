@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf  import settings
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 # Create your models here.
@@ -17,8 +18,19 @@ class Games(models.Model):
     category_id=models.ForeignKey(Category,null=True,blank=True, on_delete=models.CASCADE, verbose_name=("Category ID"))
     game_price = models.IntegerField(null=True, blank=True)
     base_view = models.ImageField(verbose_name=("Game Image"), blank=True , null=True, upload_to='./media/games')
+    description = models.TextField(null= True, blank= True)
+    stock = models.IntegerField(default=1)
+    discount_percent = models.IntegerField(default= 0, validators=[MinValueValidator(0), MaxValueValidator(100)])
+    final_game_price = models.IntegerField(default= 0)
     def __str__(self):
         return str(self.game_name)
+    def save(self, *args, **kwargs):
+        if self.game_price is not None and self.discount_percent is not None:
+            # Tính giá cuối cùng
+            self.final_game_price = self.game_price * (1 - self.discount_percent / 100)
+        
+        # Gọi phương thức save() của lớp cha
+        super().save(*args, **kwargs)
     
 class GamePicture(models.Model):
     game_id = models.ForeignKey(Games, null=True, on_delete=models.CASCADE, verbose_name="Game ID")
