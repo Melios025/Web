@@ -15,7 +15,7 @@ import { FooterComponent } from './layout/footer/footer.component';
 
 @Component({
   standalone: true,
-  imports: [RouterModule, NavbarComponent, FooterComponent, FaIconComponent, NgClass, FontAwesomeModule],
+  imports: [RouterModule, NavbarComponent, FooterComponent, FontAwesomeModule],
   selector: 'melios-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

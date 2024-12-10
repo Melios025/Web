@@ -11,6 +11,14 @@ import { SharedService } from './share.service';
     baseurl = 'http://127.0.0.1:8000'
     constructor(private http: HttpClient, public shServ: SharedService) { }
     register(username: string, email: string, password: string) {
-      return this.http.post(this.baseurl + '/register/', { username, email, password });
+      return this.http.post(this.baseurl + '/user/register/', { username, email, password });
     }
+    login(username:string, email:string, password:string){
+      return this.http.post<any>(this.baseurl+'/user/login/', { username, password })
+    }
+    logout() {
+      localStorage.removeItem('currentUser');
+
+      this.shServ.currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+  }
   }
