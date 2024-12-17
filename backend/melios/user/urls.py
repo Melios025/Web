@@ -6,8 +6,8 @@ from rest_framework.routers import DefaultRouter
 
 from .api import UsersView, RegisterView, LoginView, CartView, CartUpdateView
 
-# userRouter = DefaultRouter()
-# userRouter.register('userslist/', UsersView)
+userRouter = DefaultRouter()
+userRouter.register('userslist/', UsersView)
 # userRouter.register('cart/<int:id>/', CartUpdateView)
 
 urlpatterns = [
@@ -20,4 +20,4 @@ urlpatterns = [
     path("cart/<int:pk>", CartUpdateView.as_view({'put': 'update'}), name="updateCart"),
 ]
 
-# urlpatterns += userRouter.urls
+urlpatterns += userRouter.urls

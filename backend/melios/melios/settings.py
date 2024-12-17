@@ -49,11 +49,12 @@ INSTALLED_APPS = [
     "corsheaders",
     "games",
     "user.apps.UserConfig",
+
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "corsheaders.middleware.CorsMiddleware",  # Đặt ngay sau SecurityMiddleware
+    "corsheaders.middleware.CorsMiddleware",  
     # "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
