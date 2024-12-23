@@ -1,38 +1,53 @@
 <div class="text-left">
-    <h1 class="mb-5 text-3xl sm:text-5xl, text-black font-bold">
+    <h1 class="mb-5 text-3xl sm:text-5xl text-black font-bold">
         Our Products
     </h1>
 </div>
 
 <div class="container mt-5 mb-5">
     <div class="flex flex-wrap -mx-3">
-        <div class="w-full md:w-1/4 px-3 mt-3" *ngFor="let game of gameList">
+        <div class="w-full md:w-1/4 px-3 mt-3" *ngFor="let game of paginatedList">
             <div
-                class="w-full max-w-sm bg-black border border-gray-200 rounded-lg shadow dark:bg-black dark:border-gray-700">
-                <a [routerLink]="['/products',game.game_id]">
-                    <img class="p-8 rounded-t-lg" src="{{game.base_view}}" alt="product image" />
+                class="w-full max-w-sm min-h-full bg-black border border-gray-200 rounded-lg shadow dark:bg-black dark:border-gray-700 flex flex-col">
+                <!-- Game Image -->
+                <a [routerLink]="['/products', game.game_id]">
+                    <div class="h-48 w-full overflow-hidden rounded-t-lg">
+                        <img class="h-full w-full object-cover" [src]="game.base_view" alt="product image" />
+                    </div>
                 </a>
-                <div class="px-5 pb-5">
+
+                <!-- Game Info -->
+                <div class="px-5 pb-5 mt-auto">
+                    <!-- Game Name -->
                     <a href="#">
-                        <h5 class="text-xl font-semibold tracking-tight text-gray-300 dark:text-white">
-                            {{game.game_name}}</h5>
+                        <h5 class=" mt-5 text-xl font-semibold tracking-tight text-gray-300 dark:text-white">
+                            {{ game.game_name }}
+                        </h5>
                     </a>
 
-                    <div class="flex items-center justify-between">
-                        <span class="text-2xl font-bold mr-2  text-red-300"
-                            *ngIf="game?.final_game_price else outOfStock">{{game.final_game_price|
-                            number}}đ</span>
+                    <!-- Game Price and Add to Cart -->
+                    <div class="flex items-center justify-between mt-3">
+                        <div class="flex flex-col">
+                            <span class="text-gray-500 line-through" *ngIf="game?.game_price">{{game.game_price|
+                                number}}</span>
+                            <span class="text-xl font-bold mr-2 text-red-300" *ngIf="game.stock > 0 else outOfStock">
+                                {{ game.final_game_price | number }}đ
+                            </span>
+                        </div>
                         <ng-template #outOfStock>
-                            <span class="text-2xl text-red-300">Out of stock</span>
+                            <span class="text-xl text-red-300">Out of stock</span>
                         </ng-template>
-                        <a [routerLink]="['/products',game.game_id]"
-                            class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-6   00 dark:hover:bg-white-700 dark:focus:ring-gray-800">Add
-                            to cart</a>
+                        <a [routerLink]="['/products', game.game_id]"
+                            class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                            Add to cart
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Pagination -->
     <div class="flex justify-center mt-5">
         <button class="px-4 py-2 mx-1 bg-gray-300 rounded hover:bg-gray-400" [disabled]="currentPage === 1"
             (click)="changePage(currentPage - 1)">

@@ -22,8 +22,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         
 class CartSerializer(serializers.ModelSerializer):
 
-    game_name = serializers.CharField(source='PID.name')
-    game_price = serializers.DecimalField(decimal_places=2, max_digits=6,source='PID.price')
+    game_name = serializers.CharField(source='PID.game_name')
+    game_price = serializers.IntegerField(source='PID.game_price')
     game_base_view = serializers.ImageField(source='PID.base_view')
     class Meta:
         model = Cart

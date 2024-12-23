@@ -48,7 +48,7 @@ class CartView(generics.ListAPIView):
         return a list of all records for
         the user as determined by the userID portion of the URL.
         """
-        userID = self.kwargs['id']
+        userID = self.kwargs['username']
         return Cart.objects.filter(UID=userID)
 
 class CartUpdateView(viewsets.ModelViewSet):

@@ -25,11 +25,22 @@
                 <fa-icon [icon]="['fas', 'user']" class="menu-icon"></fa-icon>
             </div>
             <ul class="dropdown-content menu menu-lg bg-base-100 rounded-box shadow">
-                <li class="link" routerLink="login">Login</li>
-                <li class="link" routerLink="register">Register</li>
+                <!-- Nếu chưa đăng nhập -->
+                <ng-container *ngIf="!currentUser; else loggedInTemplate">
+                    <li class="link" routerLink="login">Login</li>
+                    <li class="link" routerLink="register">Register</li>
+                </ng-container>
+
+                <!-- Nếu đã đăng nhập -->
+                <ng-template #loggedInTemplate>
+                    <li class="link">
+                        Welcome, {{ currentUser.username }}
+                    </li>
+                    <a class="underline" href="login" (click)="logout()">Logout</a>
+                </ng-template>
             </ul>
         </div>
-        <div class=" navbar-end dropdown-end me-2 w-auto" routerLink="/cart">
+        <div class=" navbar-end dropdown-end me-2 w-auto" routerLink="cart">
             <div tabindex="0" role="button">
                 <fa-icon [icon]="['fas', 'cart-shopping']" class="menu-icon"></fa-icon>
             </div>

@@ -1,0 +1,4 @@
+<h1 *ngFor=" let item of product">
+  <h2>{{item.game_name}}</h2>
+  <img class="h-full w-full object-cover" [src]="item.game_base_view" alt="product image" />
+</h1>

@@ -9,6 +9,7 @@ class Wishlist(models.Model):
     game = models.ForeignKey('games.Games', on_delete=models.CASCADE, verbose_name='game ID')
 
 class Cart(models.Model):
+    id = models.AutoField(primary_key=True)
     PID = models.ForeignKey('games.Games', on_delete=models.CASCADE , verbose_name='product ID')
     UID = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='user ID')
     quantity = models.IntegerField(default=1)

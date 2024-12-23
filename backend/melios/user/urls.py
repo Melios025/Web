@@ -16,8 +16,8 @@ urlpatterns = [
     # path("cart/", CartView.as_view(), name="cart"),
     
     # test cart with id
-    path("cart/<int:id>", CartView.as_view(), name="cart"), 
-    path("cart/<int:pk>", CartUpdateView.as_view({'put': 'update'}), name="updateCart"),
+    path("cart/<int:username>", CartView.as_view(), name="cart"), 
+    path("cart/<int:username>", CartUpdateView.as_view({'put': 'update'}), name="updateCart"),
 ]
 
 urlpatterns += userRouter.urls

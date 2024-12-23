@@ -28,4 +28,8 @@ export class SharedService {
   public get currentUserValue(): User | null {
     return this.currentUserSubject.value;
   }
+  public getUserId(): number | null {
+    const currentUser = this.currentUserSubject.value;
+    return currentUser && currentUser.id !== undefined ? currentUser.id : null;
+  }
 }

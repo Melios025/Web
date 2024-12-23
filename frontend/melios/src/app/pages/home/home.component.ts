@@ -14,7 +14,7 @@ import {RouterModule} from '@angular/router';
 export class HomeComponent implements OnInit {
   gameList: any[] = []
   currentPage = 1; // Trang hiện tại
-  itemsPerPage = 6; // Số sản phẩm mỗi trang
+  itemsPerPage = 8; // Số sản phẩm mỗi trang
 
   constructor(private gamesService: GamesService, private route: ActivatedRoute) {
     this.route.paramMap.subscribe(params => this.getAllProducts())
