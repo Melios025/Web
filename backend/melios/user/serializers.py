@@ -25,6 +25,7 @@ class CartSerializer(serializers.ModelSerializer):
     game_name = serializers.CharField(source='PID.game_name')
     game_price = serializers.IntegerField(source='PID.game_price')
     game_base_view = serializers.ImageField(source='PID.base_view')
+    game_final_price = serializers.IntegerField(source='PID.final_game_price')
     class Meta:
         model = Cart
         exclude = []

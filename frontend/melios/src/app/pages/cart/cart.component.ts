@@ -3,11 +3,12 @@ import { CartService } from '../../services/cart.service';
 import { Product } from '../../models/product'
 import { CommonModule } from '@angular/common';
 import { SharedService } from '../../services/share.service';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-cart',
-  imports: [CommonModule],
+  imports: [CommonModule,RouterLink],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
   providers: [CartService]
@@ -36,6 +37,15 @@ export class CartComponent implements OnInit {
   }
   ngOnInit(): void {
     // this.add(this.products);
+  }
+  get originalPrice(): number {
+    return this.product.reduce((total, item) => total + item.game_price * item.quantity, 0);
+  }
+  get finalPrice(): number {
+    return this.product.reduce((total, item) => total + item.game_final_price * item.quantity, 0);
+  }
+  get savings(): number {
+    return this.originalPrice - this.finalPrice;
   }
   // add(data) {
   //   this.value = data
