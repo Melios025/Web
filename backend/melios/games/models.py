@@ -28,6 +28,7 @@ class Games(models.Model):
         if self.game_price is not None and self.discount_percent is not None:
             # Tính giá cuối cùng
             self.final_game_price = self.game_price * (1 - self.discount_percent / 100)
+        self.stock = GameCode.objects.filter(game = self, is_used = False).count()
         
         # Gọi phương thức save() của lớp cha
         super().save(*args, **kwargs)
@@ -35,3 +36,8 @@ class Games(models.Model):
 class GamePicture(models.Model):
     game_id = models.ForeignKey(Games, null=True, on_delete=models.CASCADE, verbose_name="Game ID")
     game_img = models.ImageField(verbose_name='Game image',upload_to="./media/games")
+
+class GameCode(models.Model):
+    game = models.ForeignKey(Games, on_delete=models.CASCADE, verbose_name='game_id')
+    code = models.CharField(max_length=50,unique= True)
+    is_used = models.BooleanField(null=True, default= 0)

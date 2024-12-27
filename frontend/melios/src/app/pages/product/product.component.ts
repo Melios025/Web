@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { GameService } from '../../services/game.service';
+import { CartService } from '../../services/cart.service';
+import Swal from 'sweetalert2';
+import { SharedService } from '../../services/share.service';
 
 
 @Component({
@@ -13,7 +16,7 @@ import { GameService } from '../../services/game.service';
 })
 export class ProductComponent implements OnInit {
   product: any; pictures: any[] = []
-  constructor(private api: GameService, private route: ActivatedRoute) {
+  constructor(private api: GameService, private route: ActivatedRoute, private cartServ: CartService, private userId: SharedService) {
     this.route.paramMap.subscribe(params => {
       const idParam = params.get('id');
       if (idParam) {
@@ -51,6 +54,36 @@ export class ProductComponent implements OnInit {
       }
     )
   }
+  AddCart(PID: number, UID: number) {
+      if (PID && UID) {
+        this.cartServ.addCart(PID, UID).subscribe(
+          response => {
+            Swal.fire({
+                          title: 'Success',
+                          text: 'Add successed',
+                          icon: 'success',
+                          confirmButtonText: 'OK'
+                        })
+  
+          },
+          err => {
+            let errStr = "";
+            console.log('oppppppppppp', err.error);
+            console.log(PID, UID)
+            errStr = (err.error.PID) ? err.error.PID : err.error.UID;
+            alert('Error: ' + errStr);
+          }
+        )
+      }
+    }
+    onAddToCart(PID: number){
+      const UID = this.userId.getUserId()
+      if(UID != null){
+        this.AddCart(PID, UID)
+      } else{
+        alert('Please log in')
+      }
+    }
   ngOnInit(): void {
     
   }

@@ -6,6 +6,7 @@ import { User } from '../../models/user';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -22,15 +23,26 @@ export class LoginComponent {
       this.authServ.login(data.username, data.password).subscribe(
         response => {
           if (response.hasOwnProperty('user')) {
-            console.log('response', response)
-            alert('Welcome, ' + data.username)
-            this.router.navigate([''])
-
+            Swal.fire({
+              title: 'Success',
+              text: 'Login successed',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            }).then(() => {
+              this.router.navigate([''])
+            })
             let currentUser = new User(response.user)
             localStorage.setItem('currentUser', JSON.stringify(currentUser));
             this.shServ.currentUserSubject.next(currentUser);
-            console.log(currentUser)
-            this.router.navigate([''])
+            Swal.fire({
+              title: 'Success',
+              text: 'Login successed',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            }).then(() => {
+              this.router.navigate([''])
+            })
+            
           } else {
             alert(response.error)
           }

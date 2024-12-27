@@ -19,7 +19,17 @@ class RegisterSerializer(serializers.ModelSerializer):
             newUser.set_password(validated_data['password'])
             newUser.save()
             return newUser
-        
+class AddCartSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cart
+        fields = ('PID', 'UID')
+        def create(self, data):
+            newCart = Cart(
+                PID = data['PID'],
+                UID = data['UID']
+            )  
+            newCart.save()
+            return newCart    
 class CartSerializer(serializers.ModelSerializer):
 
     game_name = serializers.CharField(source='PID.game_name')

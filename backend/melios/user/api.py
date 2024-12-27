@@ -11,7 +11,7 @@ from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from .serializers import UserSerializer, RegisterSerializer, CartSerializer
+from .serializers import UserSerializer, RegisterSerializer, CartSerializer, AddCartSerializer
 from .models import User , Cart
 
 class UsersView(viewsets.ModelViewSet):
@@ -21,6 +21,8 @@ class UsersView(viewsets.ModelViewSet):
 class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
 
+class AddCartView(generics.CreateAPIView):
+    serializer_class= AddCartSerializer
 class LoginView(APIView):
     def post(self, request,):
         username = request.data.get("username")
@@ -39,6 +41,7 @@ class LoginView(APIView):
 
         except User.DoesNotExist:
             raise exceptions.AuthenticationFailed('No such user')
+
 class CartView(generics.ListAPIView):
     serializer_class = CartSerializer
 
@@ -50,6 +53,16 @@ class CartView(generics.ListAPIView):
         """
         userID = self.kwargs['username']
         return Cart.objects.filter(UID=userID)
+
+class DeleteCart(APIView):
+    serializer_class = CartSerializer
+    def delete(self, request, cart_id):
+        try:
+            cart_item = Cart.objects.get(id=cart_id)
+            cart_item.delete()
+            return Response({"message": "Cart item deleted successfully."})
+        except:
+           return Response({"message": "Cart item deleted unsuccessfully."})
 
 class CartUpdateView(viewsets.ModelViewSet):
     serializer_class = CartSerializer

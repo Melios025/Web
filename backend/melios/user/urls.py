@@ -4,7 +4,7 @@ from django.urls import path, include
 from rest_framework import routers
 from rest_framework.routers import DefaultRouter
 
-from .api import UsersView, RegisterView, LoginView, CartView, CartUpdateView
+from .api import UsersView, RegisterView, LoginView, CartView, CartUpdateView,AddCartView,DeleteCart
 
 userRouter = DefaultRouter()
 userRouter.register('userslist/', UsersView)
@@ -17,6 +17,8 @@ urlpatterns = [
     
     # test cart with id
     path("cart/<int:username>", CartView.as_view(), name="cart"), 
+    path("cart/add/",AddCartView.as_view()),
+    path("cart/delete/<cart_id>", DeleteCart.as_view(), name="DeleteCart"),
     path("cart/<int:username>", CartUpdateView.as_view({'put': 'update'}), name="updateCart"),
 ]
 

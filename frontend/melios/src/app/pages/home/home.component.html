@@ -26,21 +26,26 @@
                     </a>
 
                     <!-- Game Price and Add to Cart -->
-                    <div class="flex items-center justify-between mt-3">
+                    <div class="flex items-center  justify-between mt-3">
                         <div class="flex flex-col">
                             <span class="text-gray-500 line-through" *ngIf="game?.game_price">{{game.game_price|
                                 number}}</span>
-                            <span class="text-xl font-bold mr-2 text-red-300" *ngIf="game.stock > 0 else outOfStock">
-                                {{ game.final_game_price | number }}đ
-                            </span>
+                            <div *ngIf="game.stock > 0 else outOfStock">
+                                <span class="text-xl font-bold mr-2 text-red-300">
+                                    {{ game.final_game_price | number }}đ
+                                </span>
+                                
+                                    
+                            </div>
                         </div>
+                        <button [disabled]="game.stock <= 0" (click)="onAddToCart(game.game_id)"
+                                        class="text-white disabled:bg-gray-300 disabled:line-through disabled:text-black bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                                        Add to cart
+                                    </button>
                         <ng-template #outOfStock>
                             <span class="text-xl text-red-300">Out of stock</span>
                         </ng-template>
-                        <a [routerLink]="['/products', game.game_id]"
-                            class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
-                            Add to cart
-                        </a>
+
                     </div>
                 </div>
             </div>

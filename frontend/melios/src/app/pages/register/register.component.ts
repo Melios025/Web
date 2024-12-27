@@ -5,6 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { User } from '../../models/user';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -22,8 +23,14 @@ export class RegisterComponent {
     if (data.username && data.email && data.password) {
       this.authServ.register(data.username, data.email, data.password).subscribe(
         response => {
-          alert('Welcome, ' + data.username);
-          this.router.navigate(['login']);
+          Swal.fire({
+                        title: 'Success',
+                        text: 'Register successed',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                      }).then(() => {
+                        this.router.navigate(['login'])
+                      })
         },
         err => {
           let errStr = "";
