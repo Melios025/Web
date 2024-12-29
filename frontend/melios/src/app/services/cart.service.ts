@@ -23,7 +23,7 @@ export class CartService {
     }
     )
   }
-  deleteCart(cartId: number) {
+  deleteCart(cartId: any) {
     return this.http.delete(
       this.baseurl + '/user/cart/delete/' + cartId, {
       headers: this.httpHeaders

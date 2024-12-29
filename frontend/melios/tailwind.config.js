@@ -9,11 +9,11 @@ module.exports = {
       'sans': 'Poppins, ui-sans-serif, system-ui',
       'serif': 'Poppins, ui-sans-serif, system-ui'
     },
-    fontSize: {
-      sm: ' 0,875rem',
-      base: '1.3rem',
-      xl: '1.55rem'
-    },
+    // fontSize: {
+    //   sm: ' 0,875rem',
+    //   base: '1.3rem',
+    //   xl: '1.55rem'
+    // },
     extend: {},
   },
   daisyui: {

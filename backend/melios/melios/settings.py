@@ -35,8 +35,14 @@ CORS_ALLOW_CREDENTIALS = False
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:4200',  # Địa chỉ của Angular
 ]
-# Application definition
 
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "sieuthanthu025@gmail.com"  # Thay bằng email Gmail của bạn
+EMAIL_HOST_PASSWORD = "vbxb uqzp qzpl dawj"  # Thay bằng mật khẩu ứng dụng của bạn
+# Application definition
 
 INSTALLED_APPS = [
     "django.contrib.admin",
