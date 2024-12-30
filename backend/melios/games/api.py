@@ -1,6 +1,7 @@
 from rest_framework.generics import ListAPIView, CreateAPIView
 from .models import Games, Category, GamePicture
 from .serializers import GamesSerializer, CategorySerializer, PictureSerializer
+from rest_framework.views import APIView
 
 
 class GamesAPI(ListAPIView):
@@ -11,6 +12,12 @@ class GetCategory(ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
+class GetCategoryById(ListAPIView):
+    serializer_class = CategorySerializer
+
+    def get_queryset(self):
+        id = self.kwargs["id"]
+        return Category.objects.filter(id=id)
 class GetGameById(ListAPIView):
     serializer_class = GamesSerializer
 

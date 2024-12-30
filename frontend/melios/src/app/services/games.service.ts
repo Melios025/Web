@@ -24,4 +24,12 @@ export class GamesService {
     return this.http.get(this.baseurl + '/category/',
       { headers: this.httpHeaders });
   }
+  getCategoryById(id:number): Observable<any> {
+    return this.http.get(this.baseurl + '/category/categoryid/'+id+'/',
+      { headers: this.httpHeaders });
+  }
+  getGameByCategory(id:number): Observable<any> {
+    return this.http.get(this.baseurl + '/category/'+id+'/',
+      { headers: this.httpHeaders });
+  }
 }
