@@ -20,4 +20,8 @@ export class GamesService {
     return this.http.get(this.baseurl+'/games/'+id+'/',
     {headers :this.httpHeaders });
   }
+  getCategory(): Observable<any> {
+    return this.http.get(this.baseurl + '/category/',
+      { headers: this.httpHeaders });
+  }
 }

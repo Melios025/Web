@@ -5,6 +5,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
+import { CategoryComponent } from './pages/category/category.component';
 
 export const appRoutes: Route[] = [
     {path:'',component:HomeComponent},
@@ -13,5 +14,6 @@ export const appRoutes: Route[] = [
     {path:'register', component: RegisterComponent},
     {path:'login', component: LoginComponent},
     {path:'cart',component: CartComponent},
-    {path:'checkout',component:CheckoutComponent}
+    {path:'checkout',component:CheckoutComponent},
+    {path:'category/:id',component:CategoryComponent}
 ];

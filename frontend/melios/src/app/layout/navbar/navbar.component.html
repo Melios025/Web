@@ -2,25 +2,31 @@
     <div class="navbar-start items-center w-auto max-w-max ">
         <div class="dropdown">
             <a class="btn btn-ghost text-xl">
-                <div class="border bg-secondary logo p-2 rounded-xl" routerLink="/">MELIOS</div>
+                <div class="border bg-secondary logo p-2 rounded-xl text-2xl" routerLink="/">MELIOS</div>
             </a>
         </div>
     </div>
+
     <div class="navbar-center flex flex-grow">
-        <div class="menu menu-sm sm:menu-lag menu-horizontal ">
-            <li><a href="/">Home</a></li>
-            <li>
-                <details #ProductsMenu>
-                    <summary>Products</summary>
-                    <ul class="z-30">
-                        <li><a href="/products">All</a></li>
-                    </ul>
-                </details>
-            </li>
+        <a class="menu-title text-xl" href="/">Home</a>
+        <div class="dropdown dropdown-hover" data-twe-dropdown-position="dropend">
+            <div role="button">
+                <p class="menu-title text-xl">Games⮟</p>
+
+            </div>
+            <ul
+                class="dropdown-content bg-gray-200 border border-gray-400 rounded-box shadow grid grid-rows-4 grid-flow-col gap-x-6 gap-y-4 w-auto max-w-max h-auto max-h-max">
+                <li *ngFor="let category of categoryList" class=" link no-underline mx-3 my-1 w-auto min-w-max text-xl text-center" [routerLink]="['/category', category.id]">
+                    {{category.name}}
+                </li>
+            </ul>
         </div>
     </div>
+
+
+
     <div class="navbar-end flex items-end">
-        <div class="dropdown dropdown-end pe-5 w-auto">
+        <div class="dropdown dropdown-end w-auto">
             <div tabindex="0" role="button">
                 <fa-icon [icon]="['fas', 'user']" class="menu-icon"></fa-icon>
             </div>

@@ -18,5 +18,5 @@ class PictureSerializer(serializers.ModelSerializer):
         exclude = []
 class GameCodeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = GameCode
-        exclude =[]
+        model = Games
+        fields = ['game_id', 'game_name', 'category_id', 'game_price', 'final_game_price', 'base_view', 'description', 'stock', 'discount_percent']

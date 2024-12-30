@@ -16,4 +16,5 @@ export class GameService {
     return this.http.get(this.baseurl+'/'+game_id+'/pictures/',
     {headers :this.httpHeaders });
   }
+  
 }
