@@ -1,0 +1,71 @@
+<div class="text-left">
+    <h1 class="mb-5 text-2xl sm:text-4xl text-black font-bold">
+        All games
+    </h1>
+</div>
+
+<div class="container mt-5 mb-5">
+    <div class="flex flex-wrap -mx-3">
+        <div class="w-full md:w-1/4 px-3 mt-3" *ngFor="let game of paginatedList">
+            <div
+                class="w-full max-w-sm min-h-full bg-black border border-gray-200 rounded-lg shadow dark:bg-black dark:border-gray-700 flex flex-col">
+                <!-- Game Image -->
+                <a [routerLink]="['/products', game.game_id]">
+                    <div class="h-48 w-full overflow-hidden rounded-t-lg">
+                        <img class="h-full w-full object-cover" [src]="game.base_view" alt="product image" />
+                    </div>
+                </a>
+
+                <!-- Game Info -->
+                <div class="px-5 pb-5 mt-auto">
+                    <!-- Game Name -->
+                    <a href="#">
+                        <h5 class=" mt-5 text-xl font-semibold tracking-tight text-gray-300 dark:text-white">
+                            {{ game.game_name }}
+                        </h5>
+                    </a>
+
+                    <!-- Game Price and Add to Cart -->
+                    <div class="flex items-center  justify-between mt-3">
+                        <div class="flex flex-col">
+                            <span class="text-gray-500 line-through" *ngIf="game?.game_price">{{game.game_price|
+                                number}}</span>
+                            <div *ngIf="game.stock > 0 else outOfStock">
+                                <span class="text-xl font-bold mr-2 text-red-300">
+                                    {{ game.final_game_price | number }}đ
+                                </span>
+                                
+                                    
+                            </div>
+                        </div>
+                        <button [disabled]="game.stock <= 0" (click)="onAddToCart(game.game_id)"
+                                        class="text-white disabled:bg-gray-300 disabled:line-through disabled:text-black bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                                        Add to cart
+                                    </button>
+                        <ng-template #outOfStock>
+                            <span class="text-xl text-red-300">Out of stock</span>
+                        </ng-template>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex justify-center mt-5">
+        <button class="px-4 py-2 mx-1 bg-gray-300 rounded hover:bg-gray-400" [disabled]="currentPage === 1"
+            (click)="changePage(currentPage - 1)">
+            Prev
+        </button>
+        <button *ngFor="let page of [].constructor(totalPages); let i = index" class="px-4 py-2 mx-1"
+            [class.bg-black]="currentPage === i + 1" [class.text-white]="currentPage === i + 1"
+            [class.bg-gray-300]="currentPage !== i + 1" (click)="changePage(i + 1)">
+            {{ i + 1 }}
+        </button>
+        <button class="px-4 py-2 mx-1 bg-gray-300 rounded hover:bg-gray-400" [disabled]="currentPage === totalPages"
+            (click)="changePage(currentPage + 1)">
+            Next
+        </button>
+    </div>
+</div>

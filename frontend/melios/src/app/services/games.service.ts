@@ -32,4 +32,8 @@ export class GamesService {
     return this.http.get(this.baseurl + '/category/'+id+'/',
       { headers: this.httpHeaders });
   }
+  getRecommendGames(userId:number){
+    return this.http.get(this.baseurl+'/user/recommend/'+userId+'/',
+      {headers :this.httpHeaders });
+  }
 }

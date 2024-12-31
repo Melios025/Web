@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GamesService } from '../../services/games.service';
 import { ActivatedRoute } from '@angular/router';
@@ -14,66 +14,41 @@ import Swal from 'sweetalert2';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
+  data: any[] = []
   gameList: any[] = []
-  currentPage = 1; // Trang hiện tại
-  itemsPerPage = 8; // Số sản phẩm mỗi trang
-
-  constructor(private gamesService: GamesService, private route: ActivatedRoute, private cartServ: CartService, private userId: SharedService) {
-    this.route.paramMap.subscribe(params => this.getAllProducts())
+  userId:any = 0
+  activeSlide = 0
+  constructor(private gamesService: GamesService, private route: ActivatedRoute, private cartServ: CartService, private userServ: SharedService) {
+    
   }
   ngOnInit(): void {
-
-    this.getAllProducts();
-  }
-  getAllProducts = () => {
-
-    this.gamesService.getAllProducts().subscribe(data => {
-      this.gameList = data;
-    })
-  }
-  get paginatedList() {
-    const start = (this.currentPage - 1) * this.itemsPerPage;
-    const end = start + this.itemsPerPage;
-    return this.gameList.slice(start, end);
-  }
-  get totalPages() {
-    return Math.ceil(this.gameList.length / this.itemsPerPage);
-  }
-  changePage(page: number) {
-    if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page;
+    this.userId  = this.userServ.getUserId()
+    this.gameList = this.getRandomGames(5)
+    if(this.userId){
+      this.recommend(this.userId)
     }
   }
-  AddCart(PID: number, UID: number) {
-    if (PID && UID) {
-      this.cartServ.addCart(PID, UID).subscribe(
-        response => {
-          Swal.fire({
-                        title: 'Success',
-                        text: 'Add successed',
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                      })
-
-        },
-        err => {
-          let errStr = "";
-          console.log('oppppppppppp', err.error);
-          console.log(PID, UID)
-          errStr = (err.error.PID) ? err.error.PID : err.error.UID;
-          alert('Error: ' + errStr);
-        }
-      )
-    }
+  ngAfterViewInit(): void {
+    console.log('View')
   }
-  onAddToCart(PID: number){
-    const UID = this.userId.getUserId()
-    if(UID != null){
-      this.AddCart(PID, UID)
-    } else{
-      alert('Please log in')
+  getRandomGames(n: number): any[] {
+    let result = [];
+    const tempList = [...this.data]; // Tạo một bản sao của gameList để không làm thay đổi dữ liệu gốc
+
+    for (let i = 0; i < n; i++) {
+      const randomIndex = Math.floor(Math.random() * tempList.length);
+      result.push(tempList[randomIndex]);
+      tempList.splice(randomIndex, 1); // Loại bỏ phần tử đã chọn để không bị trùng lặp
     }
+    return result;
+  }
+  recommend(userId:any){
+    this.gamesService.getRecommendGames(userId).subscribe(
+      data=>{
+        this.gameList = data as any
+      }
+    )
   }
 
 }

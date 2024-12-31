@@ -5,12 +5,14 @@ from rest_framework import viewsets
 from rest_framework import authentication
 from rest_framework import exceptions
 from rest_framework import generics
-
+from rest_framework.generics import ListAPIView
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+
+from games.serializers import GamesSerializer
 from .sendmail import send_email_SMTP
 from games.models import GameCode
 from .serializers import (
@@ -97,6 +99,20 @@ class CartUpdateView(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
+class RecommendationView(ListAPIView):
+    serializer_class = GamesSerializer
+
+    def get_queryset(self):
+        userId = self.kwargs["userId"]
+        user = User.objects.get(id=userId)
+
+        # Lấy danh sách các category_id
+        category_ids = user.bought_category.values_list('id', flat=True)
+
+        # Truy vấn tất cả các Game liên quan đến danh sách category_id
+        return Games.objects.filter(category_id__in=category_ids)
+
+
 class SendEmailView(APIView):
     def post(self, request):
         data = request.data
@@ -128,21 +144,21 @@ class SendEmailView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
         try:
-            message= ""
+            message = ""
             count = 1
             for id in game_ids:
-                game = GameCode.objects.filter(game_id = id, is_used = False).first()
-                game_name = Games.objects.get(game_id = id)
+                game = GameCode.objects.filter(game_id=id, is_used=False).first()
+                game_name = Games.objects.get(game_id=id)
                 game_code = game.code
-                message += f"Game: {count} || Game: {game_name.game_name}, Code: {game_code}\n"
+                message += (
+                    f"Game: {count} || Game: {game_name.game_name}, Code: {game_code}\n"
+                )
                 count = count + 1
                 game.is_used = True
                 game.save()
 
             subject = "Your game code"
             response = send_email_SMTP(subject, message, recipient)
-
-            
 
             return Response(
                 {"Message": "Email sent succesfully", "response": response},

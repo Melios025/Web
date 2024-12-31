@@ -4,6 +4,7 @@ from .models import User, Cart
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
+        exclude = ['password']
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:

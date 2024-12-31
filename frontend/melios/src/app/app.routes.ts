@@ -6,6 +6,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { CategoryComponent } from './pages/category/category.component';
+import { GamesComponent } from './pages/games/games.component';
 
 export const appRoutes: Route[] = [
     {path:'',component:HomeComponent},
@@ -15,5 +16,6 @@ export const appRoutes: Route[] = [
     {path:'login', component: LoginComponent},
     {path:'cart',component: CartComponent},
     {path:'checkout',component:CheckoutComponent},
-    {path:'category/:id',component:CategoryComponent}
+    {path:'category/:id',component:CategoryComponent},
+    {path:'games',component:GamesComponent}
 ];
