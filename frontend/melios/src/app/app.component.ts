@@ -46,8 +46,8 @@ export class AppComponent implements AfterViewInit, OnInit {
       import('flowbite').then(({ initFlowbite }) => {
         initFlowbite();
       });
-      import('tw-elements').then(({ initTWE, Carousel, Input, Ripple, classList }) => {
-        initTWE({ Carousel, Input, Ripple, classList }, { allowReinits: true });
+      import('tw-elements').then(({ initTWE, Carousel, Input, Ripple, classList, Collapse, Dropdown }) => {
+        initTWE({ Carousel, Input, Ripple, classList, Collapse, Dropdown }, { allowReinits: true });
       });
     }
   }
