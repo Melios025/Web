@@ -5,42 +5,68 @@
 </div>
 <div id="controls-carousel" class="relative w-full" data-carousel="static">
     <!-- Carousel wrapper -->
-    <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+    <div class="relative h-56 overflow-hidden rounded-lg md:h-96 sm:h-full">
         <!-- Item 1 -->
-        <div class=" duration-700 ease-in-out" data-carousel-item>
+        <div class="bg-black flex items-end justify-end overflow-hidden duration-700 ease-in-out" data-carousel-item>
             <a [routerLink]="['/products', gameList[0]?.game_id]">
+                <div class="lg:block hidden w-1/3 items-center p-4 bg-slate-300 rounded">
+                    <h1 class="text-black text-3xl">{{gameList[0]?.game_name}}</h1>
+                    <h1 class="text-black">{{gameList[0]?.description}}</h1>
+                </div>
                 <img [src]="gameList[0]?.base_view"
-                    class=" absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                    class="object-contain h-full absolute block md:-translate-x-[50%]  sm:-translate-x-[50%] lg:-translate-x-[20%] -translate-y-1/2 top-1/2 left-1/2"
+                    alt="...">
             </a>
         </div>
-        <!-- Item 2 -->
-        <div class=" duration-700 ease-in-out" data-carousel-item="active">
+
+        <div class="bg-black flex items-end justify-end overflow-hidden duration-700 ease-in-out" data-carousel-item>
             <a [routerLink]="['/products', gameList[1]?.game_id]">
+                <div class="lg:block hidden w-1/3 items-center p-4 bg-slate-300 rounded">
+                    <h1 class="text-black text-3xl">{{gameList[1]?.game_name}}</h1>
+                    <h1 class="text-black">{{gameList[1]?.description}}</h1>
+                </div>
                 <img [src]="gameList[1]?.base_view"
-                    class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                    class="object-contain h-full absolute block   sm:-translate-x-[50%] lg:-translate-x-[20%] -translate-y-1/2 top-1/2 left-1/2"
+                    alt="...">
             </a>
         </div>
-        <!-- Item 3 -->
-        <div class=" duration-700 ease-in-out" data-carousel-item>
+
+        <div class="bg-black flex items-end justify-end overflow-hidden duration-700 ease-in-out" data-carousel-item>
             <a [routerLink]="['/products', gameList[2]?.game_id]">
+                <div class="lg:block hidden w-1/3 items-center p-4 bg-slate-300 rounded">
+                    <h1 class="text-black text-3xl">{{gameList[2]?.game_name}}</h1>
+                    <h1 class="text-black">{{gameList[2]?.description}}</h1>
+                </div>
                 <img [src]="gameList[2]?.base_view"
-                    class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                    class="object-contain h-full absolute block   sm:-translate-x-[50%] lg:-translate-x-[20%] -translate-y-1/2 top-1/2 left-1/2"
+                    alt="...">
             </a>
         </div>
-        <!-- Item 4 -->
-        <div class=" duration-700 ease-in-out" data-carousel-item>
+
+        <div class="bg-black flex items-end justify-end overflow-hidden duration-700 ease-in-out" data-carousel-item>
             <a [routerLink]="['/products', gameList[3]?.game_id]">
+                <div class="lg:block hidden w-1/3 items-center p-4 bg-slate-300 rounded">
+                    <h1 class="text-black text-3xl">{{gameList[3]?.game_name}}</h1>
+                    <h1 class="text-black">{{gameList[3]?.description}}</h1>
+                </div>
                 <img [src]="gameList[3]?.base_view"
-                    class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                    class="object-contain h-full absolute block   sm:-translate-x-[50%] lg:-translate-x-[20%] -translate-y-1/2 top-1/2 left-1/2"
+                    alt="...">
             </a>
         </div>
-        <!-- Item 5 -->
-        <div class=" duration-700 ease-in-out" data-carousel-item>
+
+        <div class="bg-black flex items-end justify-end overflow-hidden duration-700 ease-in-out" data-carousel-item>
             <a [routerLink]="['/products', gameList[4]?.game_id]">
+                <div class="lg:block hidden w-1/3 items-center p-4 bg-slate-300 rounded">
+                    <h1 class="text-black text-3xl">{{gameList[4]?.game_name}}</h1>
+                    <h1 class="text-black">{{gameList[4]?.description}}</h1>
+                </div>
                 <img [src]="gameList[4]?.base_view"
-                    class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                    class="object-contain h-full absolute block   sm:-translate-x-[50%] lg:-translate-x-[20%] -translate-y-1/2 top-1/2 left-1/2"
+                    alt="...">
             </a>
         </div>
+
     </div>
     <!-- Slider controls -->
     <button type="button"

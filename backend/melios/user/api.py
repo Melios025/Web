@@ -6,11 +6,11 @@ from rest_framework import authentication
 from rest_framework import exceptions
 from rest_framework import generics
 from rest_framework.generics import ListAPIView
-from rest_framework import viewsets
-from rest_framework.response import Response
+
+
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
-from rest_framework.response import Response
+
 
 from games.serializers import GamesSerializer
 from .sendmail import send_email_SMTP
@@ -172,5 +172,60 @@ class SendEmailView(APIView):
         except Exception as e:
             return Response(
                 {"message": f"Failed to send email: {str(e)}"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+class AddCategoriesToUserView(APIView):
+    def post(self, request):
+        # Lấy game_id và user_id từ request
+        game_id = request.data.get("game_id")
+        user_id = request.data.get("user_id")
+
+        # Kiểm tra xem game_id và user_id có được cung cấp không
+        if not game_id or not user_id:
+            return Response(
+                {"message": "Missing required fields: game_id or user_id."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        try:
+            # Tìm game và user trong cơ sở dữ liệu
+            game = Games.objects.get(game_id=game_id)
+            user = User.objects.get(id=user_id)
+            
+            # Lấy tất cả các category của game
+            categories = game.category_id.all()
+            
+            # Loại bỏ các category đã tồn tại trong bought_category của user
+            existing_categories = user.bought_category.all()
+            categories_to_add = [category for category in categories if category not in existing_categories]
+            
+            if categories_to_add:
+                # Thêm các category vào bought_category của người dùng
+                user.bought_category.add(*categories_to_add)
+                user.save()
+                return Response(
+                    {"message": "Categories added to user successfully"},
+                    status=status.HTTP_200_OK,
+                )
+            else:
+                return Response(
+                    {"message": "User already has all these categories."},
+                    status=status.HTTP_200_OK,
+                )
+        
+        except Games.DoesNotExist:
+            return Response(
+                {"message": "Game not found."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        except User.DoesNotExist:
+            return Response(
+                {"message": "User not found."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        except Exception as e:
+            return Response(
+                {"message": f"An error occurred: {str(e)}"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )

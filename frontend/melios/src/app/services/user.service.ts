@@ -29,5 +29,9 @@ export class UserService {
   deleteUser(id: number) {
     return this.http.delete(this.baseurl+`/user/userslist/${id}`);
   }
+  addBoughtCat(userId:number, gameId:number){
+    let body = {"game_id": gameId, "user_id":userId} 
+    return this.http.post(this.baseurl+'/user/updateBoughtCat/',body);
+  }
 
 }
