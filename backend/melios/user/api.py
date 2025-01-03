@@ -6,6 +6,7 @@ from rest_framework import authentication
 from rest_framework import exceptions
 from rest_framework import generics
 from rest_framework.generics import ListAPIView
+from django.contrib.auth.hashers import check_password
 
 
 from rest_framework import status, viewsets
@@ -39,28 +40,26 @@ class AddCartView(generics.CreateAPIView):
 
 
 class LoginView(APIView):
-    def post(
-        self,
-        request,
-    ):
+    def post(self, request):
         username = request.data.get("username")
         password = request.data.get("password")
 
         try:
             user = User.objects.get(username=username)
-            if user:
-                if user.password == password:
-                    return Response(
-                        {
-                            "user": {
-                                "id": user.id,
-                                "username": user.username,
-                            }
+            
+            # So sánh mật khẩu đã hash
+            if check_password(password, user.password):  # Sử dụng check_password để so sánh mật khẩu
+                return Response(
+                    {
+                        "user": {
+                            "id": user.id,
+                            "username": user.username,
                         }
-                    )
-                else:
-                    return Response({"error": "Wrong Password"})
-
+                    }
+                )
+            else:
+                return Response({"error": "Wrong Password"})
+        
         except User.DoesNotExist:
             raise exceptions.AuthenticationFailed("No such user")
 

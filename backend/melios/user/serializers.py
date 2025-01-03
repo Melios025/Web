@@ -12,14 +12,16 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = ('username', 'email', 'password')
         extra_kwargs = {'password': {'write_only': True}}
 
-        def create(self, validated_data):
-            newUser = User (
-                email=validated_data['email'],
-                username=validated_data['username']
-            )
-            newUser.set_password(validated_data['password'])
-            newUser.save()
-            return newUser
+    def create(self, validated_data):
+        # Tạo mới người dùng với email và username
+        newUser = User(
+            email=validated_data['email'],
+            username=validated_data['username']
+        )
+        # Mã hóa mật khẩu và lưu
+        newUser.set_password(validated_data['password'])
+        newUser.save()
+        return newUser
 class AddCartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
