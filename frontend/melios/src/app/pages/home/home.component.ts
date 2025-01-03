@@ -28,7 +28,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private gamesService: GamesService,
     private route: ActivatedRoute,
     private cartServ: CartService,
-    private userServ: SharedService
+    private userServ: SharedService,
+    
   ) { }
 
   ngOnInit(): void {
@@ -67,7 +68,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.gamesService.getRecommendGames(userId).subscribe(
       data => {
         if (Array.isArray(data) && data.length === 0) {
-          this.getAllProducts(); // Gọi getAllProducts nếu dữ liệu rỗng hoặc undefined
+          this.getAllProducts();
+          console.log('Game All'); // Gọi getAllProducts nếu dữ liệu rỗng hoặc undefined
         }
         else {
           this.gameList = data as any;
@@ -82,7 +84,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.gamesService.getAllProducts().subscribe(data => {
       this.gameList = data as any;
       this.gameList = this.getRandomGames(5);
-      console.log(' all product called')
     });
   }
   getAllProductsGameList() {
@@ -115,7 +116,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
   }
   onAddToCart(PID: number) {
-    const UID = this.userId.getUserId()
+    const UID = this.userServ.getUserId()
     if (UID != null) {
       this.AddCart(PID, UID)
     } else {

@@ -143,21 +143,22 @@ class SendEmailView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
         try:
-            message = ""
+            message = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>body {font-family: Arial, sans-serif;background-color: #f4f4f4;margin: 0;padding: 0;}.email-container {background-color: #ffffff;max-width: 600px;margin: 20px auto;padding: 20px;border-radius: 8px;box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);}.email-header {text-align: center;padding: 10px 0;border-bottom: 1px solid #eaeaea;}.email-header h1 {font-size: 24px;margin: 0;color: #333333;}.email-body {padding: 20px;}.email-body p {font-size: 16px;color: #555555;margin: 0 0 10px;}.email-body ul {list-style: none;padding: 0;margin: 10px 0;}.email-body ul li {background-color: #f9f9f9;padding: 10px;border: 1px solid #eaeaea;border-radius: 5px;margin-bottom: 8px;font-size: 14px;}.email-body ul li strong {color: #333333;}.email-footer {text-align: center;padding: 10px 0;border-top: 1px solid #eaeaea;margin-top: 20px;}.email-footer p {font-size: 12px;color: #aaaaaa;}</style></head><body><div class="email-container"><div class="email-header"><h1>Your Game Codes</h1></div><div class="email-body"><p>Dear User,</p><p>Below are your game codes:</p><ul>'
             count = 1
             for id in game_ids:
                 game = GameCode.objects.filter(game_id=id, is_used=False).first()
                 game_name = Games.objects.get(game_id=id)
                 game_code = game.code
                 message += (
-                    f"Game: {count} || Game: {game_name.game_name}, Code: {game_code}\n"
+                    f"<li>Game {count}: <strong>{game_name.game_name}</strong> - Code: <code>{game_code}</code></li>"
                 )
                 count = count + 1
                 game.is_used = True
                 game.save()
 
+            message+='</ul> <p>Thank you for choosing our service. Enjoy your games!</p></div><div class="email-footer"><p>&copy; 2025 Melios. All rights reserved.</p></div></div></body></html>'
             subject = "Your game code"
-            response = send_email_SMTP(subject, message, recipient)
+            response = send_email_SMTP(subject, "Your game codes:", recipient, html_message=message)
 
             return Response(
                 {"Message": "Email sent succesfully", "response": response},
